@@ -1,1 +1,1 @@
-# INF442
+# INF442 - Strongly Connected Components
