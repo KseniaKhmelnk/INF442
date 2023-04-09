@@ -11,15 +11,15 @@
 
 using namespace std;
 
-struct point{  
+struct Point{  
     int x; // first coordinate
     int y; // second coordinate 
     int label; //label
     
-    point(int n_x, int n_y);
+    Point(int n_x, int n_y);
 };
 
-point::point(int n_x, int n_y)
+Point::Point(int n_x, int n_y)
 {
     x = n_x;
     y = n_y;
