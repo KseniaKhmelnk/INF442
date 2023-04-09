@@ -6,11 +6,11 @@
 
 using namespace std;
 
-vector<point> cluster;
-vector<point> cluster_v;
-vector<point> cluster_eps;
+vector<Point> cluster;
+vector<Point> cluster_v;
 
-int dbscan(vector<point> List, int minPts, double eps)
+
+int dbscan(vector<Point> List, int minPts, double eps)
 {
     int clusterID = 1;
     for(auto p: List)
@@ -26,7 +26,7 @@ int dbscan(vector<point> List, int minPts, double eps)
     return 0;
 }
 
-int expandCluster(vector<point> List, point point, int minPts, int clusterID, double eps)
+int expandCluster(vector<Point> List, Point point, int minPts, int clusterID, double eps)
 {    
     cluster = calculateCluster(List, point, eps); //Calculate cluster for the point
 
@@ -55,13 +55,14 @@ int expandCluster(vector<point> List, point point, int minPts, int clusterID, do
     }
 }
 
-vector<point> calculateCluster(vector<point> List, point point, double eps)
+vector<Point> calculateCluster(vector<Point> List, Point ppoint, double eps)
 {
     int index = 0;
     //initialize cluster_eps
+    vector<Point> cluster_eps;
     for(auto v: List)
     {
-        if (calculateDistance(point, v) <= eps)
+        if (calculateDistance(ppoint, v) <= eps)
         {
             cluster_eps.push_back(v);
         }
@@ -69,21 +70,21 @@ vector<point> calculateCluster(vector<point> List, point point, double eps)
     return cluster_eps;
 }
 
-double calculateDistance(point& pointCore, point& pointTarget )
+double calculateDistance(Point& pointCore, Point& pointTarget )
 {
     return sqrt(pow(pointCore.x - pointTarget.x, 2) + pow(pointCore.y - pointTarget.y, 2));
 }
 
 int main()
 {
-    vector<point> List;
+    vector<Point> List;
     double eps;
     int minPts, n;
     cin >> n >> minPts >> eps;
     while(n--){
         int x, y;
         cin >> x >> y;
-        List.push_back(point(x, y)); 
+        List.push_back(Point(x, y)); 
     }
     dbscan(List, minPts, eps);
 }
