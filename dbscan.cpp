@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 double calculateDistance(Point& pointCore, Point& pointTarget)
 {
     return sqrt(pow(pointCore.x - pointTarget.x, 2) + pow(pointCore.y - pointTarget.y, 2));
@@ -80,7 +79,7 @@ int expandCluster(vector<Point> &List, Point &point, int minPts, int clusterID, 
 
 int dbscan(vector<Point> &List, int minPts, double eps)
 {
-    int clusterID = 1;
+    int clusterID = 0;
     for(auto p: List)
     {
         if (p.label == UNCLASSIFIED)
@@ -92,7 +91,7 @@ int dbscan(vector<Point> &List, int minPts, double eps)
         }
        printf("%d %d %d\n", p.label, p.x, p.y);
     }
-    return clusterID - 1; //how many clusters exist
+    return clusterID; //how many clusters exist
 }
 
 
@@ -103,7 +102,8 @@ int main()
     int m_minPts = 2, n;
     int i = 0;
     cin >> n;
-    while(n--){
+    while(n--)
+    {
         int x, y;
         cin >> x >> y;
         List.push_back(Point(x, y, i));
