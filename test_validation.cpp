@@ -3,9 +3,9 @@
 #include <stack>
 #include <cassert>
 #include <algorithm>
-#include <map>
 using namespace std;
-
+// testing implementation : problem-example bellow
+// https://www.hackerearth.com/practice/algorithms/graphs/strongly-connected-components/practice-problems/algorithm/components-of-graph-2b95e067/
 class Graph{
 private:
     vector<vector<int>>  adj, adj_t;
@@ -72,34 +72,35 @@ public:
 };
 
 int main(){
-    int n, m;
-    cin >> n >> m;
+    int n, m, k;
+    cin >> n >> m >> k;
 
-    vector<int> from(m), to(m);
+    vector<int> from(m), to(m), air_quality(n);
+    for(auto& val : air_quality) cin >> val;
     for(int i=0; i<m; ++i){
         cin >> from[i] >> to[i];
-        // --from[i], --to[i];
-    }
-    // reindex 
-    
-    map<int,int> idx;
-    auto reindex = [&idx](int& v){
-        if(!idx.count(v)) idx[v] = idx.size();
-        v = idx[v];
-    };
-    for_each(from.begin(), from.end(), reindex);
-    for_each(to.begin(), to.end(), reindex);
-
-    cout << "Nodes after reindexing: " << idx.size() << endl;
-    
-    Graph grafo = Graph(idx.size());
-
-    // Graph grafo = Graph(n);
-    
-    for(int i = 0; i < m; ++i){
-        grafo.add_edge(from[i], to[i]);
+        from[i]--, to[i]--;
     }
 
-    grafo.identify();
-    cout << "Nodes in largest SCC: " << grafo.get_largest_scc() << endl;
+    int l=1, r=1e9;
+    while(l<r){
+        int x = (l+r+1)/2;
+        bool ok = 0;
+
+        int n_graph = 0;
+        vector<int> used(n);
+        for(int i=0; i<n; ++i) if(air_quality[i] >= x) ++n_graph, used[i] = 1;
+        Graph grafo(n);
+        for(int i=0; i<m; ++i){
+            if(used[from[i]] && used[to[i]]){
+                grafo.add_edge(from[i], to[i]);
+            }
+        }
+        grafo.identify();
+        ok = (grafo.get_largest_scc() >= k);
+        
+        if(ok) l = x;
+        else r = x-1;
+    }
+    cout << l << endl;
 }
