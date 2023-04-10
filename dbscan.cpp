@@ -15,9 +15,9 @@ int dbscan(vector<Point> List, int minPts, double eps)
     int clusterID = 1;
     for(auto p: List)
     {
-        if (p.label == UNCLASSIFIED )
+        if (p.label == UNCLASSIFIED)
         {
-            if (expandCluster(List, p, minPts, clusterID, eps) != FAILURE )
+            if (expandCluster(List, p, minPts, clusterID, eps) != FAILURE)
             {
                 clusterID += 1;
             }
@@ -38,10 +38,11 @@ int expandCluster(vector<Point> List, Point point, int minPts, int clusterID, do
     else 
     {
         int index = 0, indexCorePoint = 0;
+        //the whole cluster has clusterID
         for(auto v: cluster)
         {
             v.label = clusterID;
-            if (v.x == point.x && v.y == point.y)
+            if (v.x == point.x && v.y == point.y) //to find our core point in order to erase it
             {
                 indexCorePoint = index;
             }
@@ -52,12 +53,12 @@ int expandCluster(vector<Point> List, Point point, int minPts, int clusterID, do
 
         for (auto v: cluster)
         {
-            vector<Point> clusterNeigbors = calculateCluster(List, v, eps);//find all neighbours
-            if (clusterNeigbors.size() >= minPts )
+            vector<Point> clusterNeigbors = calculateCluster(List, v, eps);//find all neighbours of every point in cluster
+            if (clusterNeigbors.size() >= minPts)
             {
                 for (auto neighbor: clusterNeigbors)
                 {
-                    if (neighbor.label == UNCLASSIFIED || neighbor.label == NOISE )
+                    if (neighbor.label == UNCLASSIFIED || neighbor.label == NOISE)
                     {
                         if (neighbor.label == UNCLASSIFIED )
                         {
