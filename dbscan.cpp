@@ -37,17 +37,34 @@ int expandCluster(vector<Point> List, Point point, int minPts, int clusterID, do
     }
     else 
     {
+        int index = 0, indexCorePoint = 0;
+        for(auto v: cluster)
+        {
+            v.label = clusterID;
+            if (v.x == point.x && v.y == point.y)
+            {
+                indexCorePoint = index;
+            }
+            ++index;
+        }
+        cluster.erase (cluster.begin() + indexCorePoint);
         //need to erase point from cluster to do after
+
         for (auto v: cluster)
         {
-            if (v.label == NOISE) v.label = clusterID;
-            if (v.label == UNCLASSIFIED)
+            vector<Point> clusterNeigbors = calculateCluster(List, v, eps);//find all neighbours
+            if (clusterNeigbors.size() >= minPts )
             {
-                v.label = clusterID;
-                cluster_v = calculateCluster(List, v, eps); //Calculate cluster for the point
-                if (cluster_v.size() >= minPts)
+                for (auto neighbor: clusterNeigbors)
                 {
-                    //cluster = cluster + cluster_v
+                    if (neighbor.label == UNCLASSIFIED || neighbor.label == NOISE )
+                    {
+                        if (neighbor.label == UNCLASSIFIED )
+                        {
+                            cluster.push_back(neighbor);
+                        }
+                        neighbor.label = clusterID;
+                    }
                 }
             }
         }
