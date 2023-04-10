@@ -12,7 +12,7 @@ double calculateDistance(Point& pointCore, Point& pointTarget)
     return sqrt(pow(pointCore.x - pointTarget.x, 2) + pow(pointCore.y - pointTarget.y, 2));
 }
 
-vector<Point> calculateCluster(vector<Point> &List, Point ppoint, double eps)
+vector<Point> calculateCluster(vector<Point> &List, Point &ppoint, double eps)
 {
     int index = 0;
     //initialize cluster_eps
@@ -23,11 +23,12 @@ vector<Point> calculateCluster(vector<Point> &List, Point ppoint, double eps)
         {
             cluster_eps.push_back(v);
         }
+       // printf("%f %d %d\n",calculateDistance(ppoint, v), ppoint.number, v.number );
     }
     return cluster_eps;
 }
 
-int expandCluster(vector<Point> &List, Point point, int minPts, int clusterID, double eps)
+int expandCluster(vector<Point> &List, Point &point, int minPts, int clusterID, double eps)
 {    
     vector<Point> cluster = calculateCluster(List, point, eps); //Calculate cluster for the point
 
@@ -39,6 +40,7 @@ int expandCluster(vector<Point> &List, Point point, int minPts, int clusterID, d
     else 
     {
         int index = 0, indexCorePoint = 0;
+        point.label = clusterID;
         //the whole cluster has clusterID
         for(auto v: cluster)
         {
@@ -49,6 +51,7 @@ int expandCluster(vector<Point> &List, Point point, int minPts, int clusterID, d
             }
             ++index;
         }
+        //printf("Core point %d\n", List[point.number].label);
         cluster.erase (cluster.begin() + indexCorePoint);
         //need to erase point from cluster to do after
 
@@ -87,22 +90,22 @@ int dbscan(vector<Point> &List, int minPts, double eps)
                 clusterID += 1;
             }
         }
-       // printf("%d\n", p.number);
+       printf("%d %d %d\n", p.label, p.x, p.y);
     }
-    return clusterID; //how many clusters exist
+    return clusterID - 1; //how many clusters exist
 }
 
 
 int main()
 {
     vector<Point> List;
-    double eps = 0.75;
+    double eps = 3;
     int m_minPts = 2, n;
     int i = 0;
     cin >> n;
     while(n--){
-        int x, y, z, l;
-        cin >> x >> y >> z >> l;
+        int x, y;
+        cin >> x >> y;
         List.push_back(Point(x, y, i));
         i++; 
     }
