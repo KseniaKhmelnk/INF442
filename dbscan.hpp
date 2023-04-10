@@ -15,13 +15,15 @@ struct Point{
     int x; // first coordinate
     int y; // second coordinate 
     int label; //label
+    int number;
     
-    Point(int n_x, int n_y);
+    Point(int n_x, int n_y, int n_number);
 };
 
-Point::Point(int n_x, int n_y)
+Point::Point(int n_x, int n_y, int n_number)
 {
     x = n_x;
     y = n_y;
     label = UNCLASSIFIED;
+    number = n_number;
 }
