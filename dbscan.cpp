@@ -3,96 +3,96 @@
 #include <queue>
 #include <cmath>
 #include "dbscan.hpp"
-#include "DSU.hpp"
 
 using namespace std;
 
-double calculateDistance(Point& pointCore, Point& pointTarget)
+double Point::calculateDistance(const Point& pointTarget)
 {
-    return sqrt(pow(pointCore.x - pointTarget.x, 2) + pow(pointCore.y - pointTarget.y, 2));
+    return sqrt(pow(this->x - pointTarget.x, 2) + pow(this->y - pointTarget.y, 2));
 }
 
-vector<Point> calculateCluster(vector<Point> &List, Point &ppoint, double eps)
+vector<Point> DBSCAN::calculateCluster(vector<Point> &List, Point &point, double eps)
 {
     int index = 0;
     //initialize cluster_eps
     vector<Point> cluster_eps;
     for(auto v: List)
     {
-        if (calculateDistance(ppoint, v) <= eps)
+        if (point.calculateDistance(v) <= eps)
         {
             cluster_eps.push_back(v);
         }
-       // printf("%f %d %d\n",calculateDistance(ppoint, v), ppoint.number, v.number );
+       // printf("%f %d %d\n",calculateDistance(ppoint, v), ppoint.ID, v.ID );
     }
     return cluster_eps;
 }
 
-int expandCluster(vector<Point> &List, Point &point, int minPts, int clusterID, double eps)
-{    
-    vector<Point> cluster = calculateCluster(List, point, eps); //Calculate cluster for the point
+//Old version complexity O(n ^ 2)
+// int expandCluster(vector<Point> &List, Point &point, int minPts, int clusterID, double eps)
+// {    
+//     vector<Point> cluster = calculateCluster(List, point, eps); //Calculate cluster for the point
 
-    if (cluster.size() < minPts)
-    {
-        point.label = NOISE;
-        return FAILURE;
-    }
-    else 
-    {
-        int index = 0, indexCorePoint = 0;
-        point.label = clusterID;
-        //the whole cluster has clusterID
-        for(auto v: cluster)
-        {
-            List[v.number].label = clusterID;
-            if (v.x == point.x && v.y == point.y) //to find our core point in order to erase it
-            {
-                indexCorePoint = index;
-            }
-            ++index;
-        }
-        //printf("Core point %d\n", List[point.number].label);
-        cluster.erase (cluster.begin() + indexCorePoint);
-        //need to erase point from cluster to do after
+//     if (cluster.size() < minPts)
+//     {
+//         point.label = NOISE;
+//         return FAILURE;
+//     }
+//     else 
+//     {
+//         int index = 0, indexCorePoint = 0;
+//         point.label = clusterID;
+//         //the whole cluster has clusterID
+//         for(auto v: cluster)
+//         {
+//             List[v.ID].label = clusterID;
+//             if (v.x == point.x && v.y == point.y) //to find our core point in order to erase it
+//             {
+//                 indexCorePoint = index;
+//             }
+//             ++index;
+//         }
+//         //printf("Core point %d\n", List[point.ID].label);
+//         cluster.erase (cluster.begin() + indexCorePoint);
+//         //need to erase point from cluster to do after
 
-        for (auto v: cluster)
-        {
-            vector<Point> clusterNeigbors = calculateCluster(List, v, eps);//find all neighbours of every point in cluster
-            if (clusterNeigbors.size() >= minPts)
-            {
-                for (auto neighbor: clusterNeigbors)
-                {
-                    if (List[neighbor.number].label == UNCLASSIFIED || List[neighbor.number].label == NOISE)
-                    {
-                        if (List[neighbor.number].label == UNCLASSIFIED )
-                        {
-                            cluster.push_back(neighbor);
-                        }
-                        List[neighbor.number].label = clusterID;
-                    }
-                }
-            }
-        }
-        return SUCCESS;
-    }
-}
+//         for (auto v: cluster)
+//         {
+//             vector<Point> clusterNeigbors = calculateCluster(List, v, eps);//find all neighbours of every point in cluster
+//             if (clusterNeigbors.size() >= minPts)
+//             {
+//                 for (auto neighbor: clusterNeigbors)
+//                 {
+//                     if (List[neighbor.ID].label == UNCLASSIFIED || List[neighbor.ID].label == NOISE)
+//                     {
+//                         if (List[neighbor.ID].label == UNCLASSIFIED )
+//                         {
+//                             cluster.push_back(neighbor);
+//                         }
+//                         List[neighbor.ID].label = clusterID;
+//                     }
+//                 }
+//             }
+//         }
+//         return SUCCESS;
+//     }
+// }
 
-int expandCluster(vector<Point> &List, Point &point, int minPts, int clusterID, double eps, DSU &UF){
+int DBSCAN::expandCluster(vector<Point> &List, Point &point, int minPts, int clusterID, double eps, DSU &UF){
     
-    UF.set_parent(point.number, clusterID);
+    UF.set_parent(point.ID, clusterID);
     vector<Point> cluster = calculateCluster(List, point, eps);
     for(auto& neighbor : cluster){
-        if(List[neighbor.number].label >= 0){ // classified
-            UF.join(List[neighbor.number].label, clusterID);
+        if(List[neighbor.ID].label >= 0){ // classified
+            UF.join(List[neighbor.ID].label, clusterID);
         }
-        List[neighbor.number].label = UF.find(clusterID);
-        // printf("%d %d\n", neighbor.number, UF.find(clusterID));
+        List[neighbor.ID].label = UF.find(clusterID);
+        // printf("%d %d\n", neighbor.ID, UF.find(clusterID));
     }
 
     return SUCCESS;
 }
 
-int dbscan(vector<Point> &List, int minPts, double eps)
+int DBSCAN::fit(vector<Point> &List, int minPts, double eps)
 {
     // int clusterID = 0;
     // for(auto point: List)
@@ -112,13 +112,13 @@ int dbscan(vector<Point> &List, int minPts, double eps)
     vector<int> core_points_id;
     for(auto &point : List){
         if(calculateCluster(List, point, eps).size() >= minPts){
-            core_points_id.push_back(point.number);
+            core_points_id.push_back(point.ID);
         }
     }
 
     for(auto id : core_points_id){
         auto& point = List[id];
-        expandCluster(List, point, minPts, point.number, eps, UF);
+        expandCluster(List, point, minPts, point.ID, eps, UF);
     }
 
     for(auto &point : List){
@@ -131,6 +131,7 @@ int dbscan(vector<Point> &List, int minPts, double eps)
 int main()
 {
     vector<Point> List;
+    DBSCAN clustering;
     double eps = 3;
     int m_minPts = 2, n;
     int i = 0;
@@ -142,5 +143,5 @@ int main()
         List.push_back(Point(x, y, i));
         i++; 
     }
-    printf("%d\n", dbscan(List, m_minPts, eps));
+    printf("%d\n", clustering.fit(List, m_minPts, eps));
 }
