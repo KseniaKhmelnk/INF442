@@ -14,7 +14,7 @@ struct Point{
     int x; // first coordinate
     int y; // second coordinate 
     int label; //label
-    int ID;
+    int ID; //id of every point
     
     Point(int n_x, int n_y, int n_ID);
     double calculateDistance(const Point& pointTarget);
@@ -30,8 +30,19 @@ Point::Point(int n_x, int n_y, int n_ID)
 
 class DBSCAN
 {
-public:
-    vector<Point> calculateCluster(vector<Point> &List, Point &ppoint, double eps);
-    int expandCluster(vector<Point> &List, Point &point, int minPts, int clusterID, double eps, DSU &UF);
-    int fit(vector<Point> &List, int minPts, double eps);
+  private:
+    double eps;
+    int min_pts;
+    DSU *disjoint_set;
+  public: 
+    DBSCAN(double n_eps, double n_minPts);
+    vector<int> calculateCluster(vector<Point> &data, Point &center_point);
+    int expandCluster(vector<Point> &List, Point &point);
+    int fit(vector<Point> &data);
+    int fit(double **distance_matrix, int total_pts);
 };
+DBSCAN::DBSCAN(double n_eps, double n_min_pts)
+{
+    eps = n_eps;
+    min_pts = n_min_pts;
+}
