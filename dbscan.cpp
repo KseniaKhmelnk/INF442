@@ -11,21 +11,21 @@ double Point::calculateDistance(const Point& pointTarget)
     return sqrt(pow(this->x - pointTarget.x, 2) + pow(this->y - pointTarget.y, 2));
 }
 
-// vector<int> DBSCAN::calculateCluster(vector<Point> &data, Point &center_point)
-// {
-//     int index = 0;
-//     //initialize cluster_eps
-//     vector<int> cluster_eps;
-//     for(auto point : data)
-//     {
-//         if (center_point.calculateDistance(point) <= eps)
-//         {
-//             cluster_eps.push_back(point.ID);
-//         }
-//        // printf("%f %d %d\n",calculateDistance(ppoint, v), ppoint.ID, v.ID );
-//     }
-//     return cluster_eps;
-// }
+vector<int> DBSCAN::calculateCluster(vector<Point> &data, Point &center_point)
+{
+    int index = 0;
+    //initialize cluster_eps
+    vector<int> cluster_eps;
+    for(auto point : data)
+    {
+        if (center_point.calculateDistance(point) <= eps)
+        {
+            cluster_eps.push_back(point.ID);
+        }
+       // printf("%f %d %d\n",calculateDistance(ppoint, v), ppoint.ID, v.ID );
+    }
+    return cluster_eps;
+}
 
 //Old version complexity O(n ^ 2)
 // int expandCluster(vector<Point> &List, Point &point, int minPts, int clusterID, double eps)

@@ -31,15 +31,18 @@ Point::Point(int n_x, int n_y, int n_ID)
 class DBSCAN
 {
   private:
-    double eps;
-    int min_pts;
-    DSU *disjoint_set;
+    double eps = 0;
+    int min_pts = 0;
+    DSU *disjoint_set = nullptr;
+
   public: 
     DBSCAN(double n_eps, double n_minPts);
+    vector<int> getNeighbors(int point_id, int total_pts, double** distance_matrix);
+    void fit_bfs(double **distance_matrix, int total_pts);
+
     vector<int> calculateCluster(vector<Point> &data, Point &center_point);
     int expandCluster(vector<Point> &List, Point &point);
     int fit(vector<Point> &data);
-    int fit(double **distance_matrix, int total_pts);
 };
 DBSCAN::DBSCAN(double n_eps, double n_min_pts)
 {
