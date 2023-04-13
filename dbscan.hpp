@@ -35,10 +35,13 @@ class DBSCAN
     int min_pts = 0;
     DSU *disjoint_set = nullptr;
 
+    vector<int> fit_bfs(double **distance_matrix, int total_pts);
+    vector<int> fit_dsu(double **distance_matrix, int total_pts);
+
   public: 
     DBSCAN(double n_eps, double n_minPts);
-    vector<int> getNeighbors(int point_id, int total_pts, double** distance_matrix);
-    void fit_bfs(double **distance_matrix, int total_pts);
+    vector<int> getNeighbors(int point, int total_pts, double** distance_matrix);
+    vector<int> fit(double **distance_matrix, int total_pts, string algo="BFS");
 
     vector<int> calculateCluster(vector<Point> &data, Point &center_point);
     int expandCluster(vector<Point> &List, Point &point);
