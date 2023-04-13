@@ -12,7 +12,7 @@ class DSU {
     DSU(int n) : size{n}{
         par = new int[n];
         rank = new int[n]();
-        for(int i=0; i<n; ++i) par[i] = i;
+        for(int i = 0; i < n; ++i) par[i] = i;
     }
     int find(int a){
         if(par[a] == a) return a;
