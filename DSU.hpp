@@ -20,7 +20,7 @@ class DSU {
     }
 
     void join(int a, int b){
-        a=find(a), b=find(b);
+        a = find(a), b = find(b);
         if(a != b) size--;
         if(rank[a] < rank[b]) std::swap(a,b);
         par[a] = b;
