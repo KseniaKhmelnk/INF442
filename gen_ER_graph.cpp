@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <cmath>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
@@ -18,7 +17,7 @@ struct Edge{
 
 Edge::Edge(int n_u, int n_v) : u{n_u}, v{n_v} {};
 
-ostream&  operator<<(ostream&os, const Edge& edge){
+ostream& operator<<(ostream&os, const Edge& edge){
     os << edge.u << " "  << edge.v;
     return os;
 }
@@ -32,7 +31,8 @@ int main()
     //srand (time(NULL));
     FILE * pFile;
     pFile = fopen ("graph.txt","w");
-    int n, p;
+    int n;
+    double p;
     vector<Edge> edgeList;
     cin >> n >> p; //number of the nodes and the probability
     int count_edges = 0; //number of edges
@@ -41,12 +41,14 @@ int main()
         for (int j = 0; j < n; j++)
         {
             //take a pair of nodes, and get a random number R. If R < P (probability), add an edge
-            if (i != j && rand() < p)  edgeList.push_back(Edge(i, j)), count_edges++;
+            if ((double) rand() / RAND_MAX < p)  edgeList.push_back(Edge(i, j)), count_edges++;
         }
     }
     //write in file all the edges
     fprintf(pFile, "%d %d\n", n, count_edges);
     for (auto edge: edgeList)  fprintf(pFile, "%d %d\n", edge.u, edge.v);
     fclose (pFile);
+    cout << n << " " << count_edges << endl;
+    cout << "max : " << n*(n-1) << endl;
     return 0;
 }
