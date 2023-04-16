@@ -1,6 +1,6 @@
+#include <iostream>
 #include <vector>
 #include <cmath>
-#include <iostream>
 #include "DSU.hpp"
 
 #define UNCLASSIFIED -1
