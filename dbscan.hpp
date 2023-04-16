@@ -4,11 +4,6 @@
 #include "DSU.hpp"
 
 #define UNCLASSIFIED -1
-#define NOISE -2
-#define SUCCESS 0
-#define FAILURE -3
-
-using namespace std;
 
 struct Point{  
     int x; // first coordinate
@@ -28,27 +23,27 @@ Point::Point(int n_x, int n_y, int n_ID)
     ID = n_ID;
 }
 
+double Point::calculateDistance(const Point& pointTarget)
+{
+    return sqrt(pow(this->x - pointTarget.x, 2) + pow(this->y - pointTarget.y, 2));
+}
+
 class DBSCAN
 {
   private:
     double eps = 0;
     int min_pts = 0;
-    DSU *disjoint_set = nullptr;
+  
+  public:
+    std::vector<int> labels;
+  
+  private:
+    void fit_bfs(double **distance_matrix, int total_pts);
+    void fit_dsu(double **distance_matrix, int total_pts);
 
-    vector<int> fit_bfs(double **distance_matrix, int total_pts);
-    vector<int> fit_dsu(double **distance_matrix, int total_pts);
-
-  public: 
-    DBSCAN(double n_eps, double n_minPts);
-    vector<int> getNeighbors(int point, int total_pts, double** distance_matrix);
-    vector<int> fit(double **distance_matrix, int total_pts, string algo="BFS");
-
-    vector<int> calculateCluster(vector<Point> &data, Point &center_point);
-    int expandCluster(vector<Point> &List, Point &point);
-    int fit(vector<Point> &data);
+  public:
+    DBSCAN(double n_eps, double n_min_pts):eps{n_eps}, min_pts{n_min_pts}{}
+    std::vector<int> getNeighbors(int point, int total_pts, double** distance_matrix);
+    void fit(double **distance_matrix, int total_pts, std::string algo="BFS");
+    void fit(std::vector<Point> &data);
 };
-DBSCAN::DBSCAN(double n_eps, double n_min_pts)
-{
-    eps = n_eps;
-    min_pts = n_min_pts;
-}
