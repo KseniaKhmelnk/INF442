@@ -40,9 +40,11 @@ int main()
     {
         for (int j = 0; j < n; j++)
         {
-            if (i != j && rand() >= p)  edgeList.push_back(Edge(i, j)), count_edges++;//edge is made
+            //take a pair of nodes, and get a random number R. If R < P (probability), add an edge
+            if (i != j && rand() < p)  edgeList.push_back(Edge(i, j)), count_edges++;
         }
     }
+    //write in file all the edges
     fprintf(pFile, "%d %d\n", n, count_edges);
     for (auto edge: edgeList)  fprintf(pFile, "%d %d\n", edge.u, edge.v);
     fclose (pFile);
