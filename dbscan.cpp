@@ -76,7 +76,7 @@ void DBSCAN::fit(double** distance_matrix, int total_pts, std::string algo){
     labels.resize(total_pts, -1); // -1 if noise
 
     if (algo != "BFS" && algo != "DSU") 
-        throw std::invalid_argument("\'" + algo + "\'" + " is not a method");
+        throw std::invalid_argument("\'" + algo + "\'" + " is not a valid method");
     
     algo == "BFS" ? fit_bfs(distance_matrix, total_pts) : fit_dsu(distance_matrix, total_pts);
 } 
