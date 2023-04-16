@@ -47,7 +47,7 @@ public:
         adj[from].push_back(to);
         adj_t[to].push_back(from);
     }
-    void identify(){
+    void run(){
         int n = (int) adj.size();
         auto &seen = scc;
         for(int i = 0; i < n; ++i){
@@ -68,7 +68,12 @@ public:
             ans = max(ans, sz);
         }
         return ans;
-    } 
+    }
+    void print_scc(){
+        for(int i = 0; i < adj.size(); ++i){
+            printf("%d: %d\n", i, scc[i]);
+        }
+    }
 };
 
 int main(){
@@ -78,21 +83,21 @@ int main(){
     vector<int> from(m), to(m);
     for(int i=0; i<m; ++i){
         cin >> from[i] >> to[i];
-        // --from[i], --to[i];
+        // --from[i], --to[i]; // if not 0 indexed
     }
-    // reindex 
+    // reindex IF NEEDED (bug if node is not in the edge list)
     
-    map<int,int> idx;
-    auto reindex = [&idx](int& v){
-        if(!idx.count(v)) idx[v] = idx.size();
-        v = idx[v];
-    };
-    for_each(from.begin(), from.end(), reindex);
-    for_each(to.begin(), to.end(), reindex);
+    // map<int,int> idx;
+    // auto reindex = [&idx](int& v){
+    //     if(!idx.count(v)) idx[v] = idx.size();
+    //     v = idx[v];
+    // };
+    // for_each(from.begin(), from.end(), reindex);
+    // for_each(to.begin(), to.end(), reindex);
 
-    cout << "Nodes after reindexing: " << idx.size() << endl;
+    // cout << "Nodes after reindexing: " << idx.size() << endl;
     
-    Graph grafo = Graph(idx.size());
+    Graph grafo = Graph(n);
 
     // Graph grafo = Graph(n);
     
@@ -100,6 +105,7 @@ int main(){
         grafo.add_edge(from[i], to[i]);
     }
 
-    grafo.identify();
+    grafo.run();
     cout << "Nodes in largest SCC: " << grafo.get_largest_scc() << endl;
+    // grafo.print_scc();
 }
