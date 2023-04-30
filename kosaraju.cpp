@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
 #include <cassert>
 #include <algorithm>
+#include <climits>
 #include "kosaraju.hpp"
 
-// Kosaraju's implementatino
+// Kosaraju's implementation
 void Graph::dfs(int cur_node){
     auto &seen = scc;
     seen[cur_node] = -1;
@@ -25,7 +27,7 @@ void Graph::dfs_t(int cur_node, int component){
         dfs_t(neighbor, component);
     }
 }
-void Graph::run(){
+void Graph::run_kosaraju(){
     int n = (int) adj.size();
     auto &seen = scc;
     for(int i = 0; i < n; ++i){
@@ -38,6 +40,43 @@ void Graph::run(){
         }
         order.pop();
     }
+}
+
+// Generate distance matrix
+void Graph::bfs(int from, std::vector<std::vector<int>> &dmatrix)
+{
+    int n = adj.size();
+    std::vector<bool> visited(n);      
+    std::queue<std::pair<int,int>> q; 
+    q.push({from, 0}); 
+    while(!q.empty())
+    {
+
+        auto [node, distance] = q.front();
+        q.pop();
+        visited[node] = true;
+        for(int next_node: adj[node])
+        {
+            if(!visited[next_node])
+            {  
+                dmatrix[from][next_node] = distance + 1;
+                q.push({next_node, distance + 1});
+            }
+        }
+    }
+}
+
+std::vector<std::vector<int>> Graph::distance_matrix()
+{
+    int n = adj.size();
+    std::vector<std::vector<int>> dmatrix(n, std::vector<int>(n, INT_MAX));
+
+    for(int from = 0; from < n; from++)
+    {
+        bfs(from, dmatrix);
+    }
+
+    return dmatrix;
 }
 
 // INPUT
