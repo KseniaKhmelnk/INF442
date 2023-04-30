@@ -1,3 +1,6 @@
+#ifndef DSU_HPP
+#define DSU_HPP
+
 #include <algorithm>
 #include <vector>
 
@@ -30,4 +33,6 @@ class DSU {
     void set_parent(int a, int label){
       par[a] = label;
     }
-}; 
+};
+
+#endif //DSU_HPP

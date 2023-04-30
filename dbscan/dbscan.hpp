@@ -1,3 +1,6 @@
+#ifndef DBSCAN_HPP
+#define DBSCAN_HPP
+
 #include <iostream>
 #include <vector>
 #include "DSU.hpp"
@@ -25,3 +28,5 @@ class DBSCAN
     std::vector<int> getNeighbors(int point, int total_pts, double** distance_matrix);
     void fit(double **distance_matrix, int total_pts, std::string algo="BFS");
 };
+
+#endif //DBSCAN_HPP

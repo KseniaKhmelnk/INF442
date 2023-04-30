@@ -1,3 +1,6 @@
+#ifndef KOSARAJU_HPP
+#define KOSARAJU_HPP
+
 #include <vector>
 #include <stack>
 
@@ -26,3 +29,5 @@ public:
     int get_comp(int i);
     void print_all_scc();
 };
+
+#endif //KOSARAJU_HPP
