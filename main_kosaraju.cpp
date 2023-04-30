@@ -2,8 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
-#include "kosaraju.hpp"
-#include "dbscan.hpp"
+#include "kosaraju/kosaraju.hpp"
 
 using namespace std;
 

@@ -2,8 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <map>
-#include "kosaraju.hpp"
-#include "dbscan.hpp"
+#include "kosaraju/kosaraju.hpp"
+#include "dbscan/dbscan.hpp"
 
 using namespace std;
 

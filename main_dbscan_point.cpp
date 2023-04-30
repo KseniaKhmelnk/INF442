@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include "dbscan.hpp"
+#include "dbscan/dbscan.hpp"
 
 using namespace std;
 
