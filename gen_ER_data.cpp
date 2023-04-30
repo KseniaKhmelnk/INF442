@@ -34,7 +34,7 @@ int main()
                     if ((double) rand() / RAND_MAX < p)  grafo.add_edge(i, j), ++count_edges;
                 }
             }
-            grafo.run();
+            grafo.run_kosaraju();
             fprintf(pFile, "%lf, %d, %d\n", p, grafo.get_n_scc(), grafo.get_largest_scc());
         }
         std::fclose(pFile);
