@@ -52,7 +52,9 @@ int main(){
     DBSCAN clustering(eps, m_minPts);
     clustering.fit(distance_matrix, n, "DSU");
 
-    cout << "Number of clusters: " << clustering.n_cluster << endl; 
+    cout << "Number of clusters: " << clustering.get_n_cluster() << endl;
+    cout << "Nodes in largest cluster: " << clustering.get_largest_cluster() << endl; 
+    
     // for(auto id : clustering.labels) cout << id << " ";
     // cout << endl;
 }

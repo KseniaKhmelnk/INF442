@@ -15,10 +15,14 @@ class DBSCAN
     double eps = 0;
     int min_pts = 0; //y compris le centre du cluster
     
-  public:
     int n_cluster = 0;
     std::vector<int> labels;
-  
+    std::vector<int> cluster_size;
+
+  public:
+    int get_n_cluster();
+    int get_largest_cluster();
+
   private:
     void fit_bfs(double **distance_matrix, int total_pts);
     void fit_dsu(double **distance_matrix, int total_pts);

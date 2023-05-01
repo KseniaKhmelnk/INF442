@@ -18,12 +18,12 @@ struct Point
 };
 
 int main(){
-    int n; 
+    int n; // number of points
     cin >> n;
     vector<Point> points(n);
     for(auto &p : points)
     {
-        cin >> p.x >> p.y;
+        cin >> p.x >> p.y; // coordinates
     }
     
     int total_pts = points.size();
@@ -40,7 +40,10 @@ int main(){
     int m_minPts = 2;
     DBSCAN clustering(eps, m_minPts);
     clustering.fit(distance_matrix, total_pts, "BFS");
-    
-    for(auto id : clustering.labels) cout << id << " ";
-    cout << endl;
+
+    cout << "Number of clusters: " << clustering.get_n_cluster() << endl;
+    cout << "Nodes in largest cluster: " << clustering.get_largest_cluster() << endl; 
+
+    // for(auto id : clustering.labels) cout << id << " ";
+    // cout << endl;
 }

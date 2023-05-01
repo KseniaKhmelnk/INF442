@@ -26,7 +26,7 @@ public:
     // getters
     int get_n_scc();
     int get_largest_scc();
-    int get_comp(int i);
+    int get_scc(int i);
     void print_all_scc();
 };
 

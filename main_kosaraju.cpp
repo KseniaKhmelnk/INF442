@@ -7,7 +7,7 @@
 using namespace std;
 
 const bool IDX_0 = true; // if nodes ids start from 1 and not 0 
-const bool REINDEX = false; // if nodes ids are not in range [0, n-1] ou [1, n]
+const bool REINDEX = true; // if nodes ids are not in range [0, n-1] ou [1, n]
 
 int main(){
     int n, m;

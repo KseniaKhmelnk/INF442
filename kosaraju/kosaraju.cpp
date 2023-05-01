@@ -97,7 +97,7 @@ void Graph::add_edge(int from, int to){
 
 
 // OUTPUT
-int Graph::get_comp(int i){ return scc[i]; }
+int Graph::get_scc(int i){ return scc[i]; }
 int Graph::get_n_scc() { return n_scc; }
 int Graph::get_largest_scc(){
     int ans = 0;

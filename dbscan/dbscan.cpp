@@ -71,12 +71,26 @@ void DBSCAN::fit_bfs(double** distance_matrix, int total_pts){
 
 void DBSCAN::fit(double** distance_matrix, int total_pts, std::string algo){
     // cleaning labels 
-    labels.clear();
+    labels.clear(); 
     labels.resize(total_pts, NOISE); // -1 if noise
+    cluster_size.clear();
+    cluster_size.resize(total_pts, 0);
     n_cluster = 0;
 
     if (algo != "BFS" && algo != "DSU") 
         throw std::invalid_argument("\'" + algo + "\'" + " is not a valid method");
 
     algo == "BFS" ? fit_bfs(distance_matrix, total_pts) : fit_dsu(distance_matrix, total_pts);
-} 
+
+    for(auto cluster : labels) if(~cluster) ++cluster_size[cluster];
+}
+
+// getters
+int DBSCAN::get_n_cluster(){ return n_cluster; }
+int DBSCAN::get_largest_cluster(){
+    int ans = 0;
+    for(auto sz : cluster_size){
+        ans = std::max(ans, sz);
+    }
+    return ans;
+};
