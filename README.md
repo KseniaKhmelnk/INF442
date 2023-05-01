@@ -1,1 +1,1 @@
-# INF442 - Strongly Connected Components
+# INF442 - SCC & DBSCAN
