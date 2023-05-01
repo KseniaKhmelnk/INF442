@@ -3,7 +3,7 @@
 #include <cmath>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
-#include "kosaraju.hpp"
+#include "kosaraju/kosaraju.hpp"
 
 int main()
 {
