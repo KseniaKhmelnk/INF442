@@ -30,7 +30,7 @@ int main()
     /* initialize random seed: */
     //srand (time(NULL));
     FILE * pFile;
-    pFile = fopen ("../dataset/ER_graph.txt","w");
+    pFile = fopen ("dataset/ER_graph.txt","w");
     int n;
     double p;
     vector<Edge> edgeList;

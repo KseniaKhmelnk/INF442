@@ -19,7 +19,7 @@ int main()
 
     FILE *pFile;
     for(int sample = 1; sample < 10; ++sample){
-        std::string fname = "../csv/ER_" + std::to_string(n) + "_" + std::to_string(sample) + ".csv";
+        std::string fname = "csv/ER_" + std::to_string(n) + "_" + std::to_string(sample) + ".csv";
         pFile = std::fopen(fname.c_str(), "w");
         fprintf(pFile, "p,n_scc,largest_scc\n");
         for (double p = p_start; p < p_end; p += delta)

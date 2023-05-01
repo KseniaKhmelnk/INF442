@@ -28,7 +28,7 @@ int main(){
 
     FILE *pFile;
     for(int sample = 0; sample < n_samples; ++sample){
-        std::string p_fname = "../csv/points_XY_" + std::to_string(n) + "_" + std::to_string(minPts) + "_" + std::to_string(sample) + ".csv";
+        std::string p_fname = "csv/points_XY_" + std::to_string(n) + "_" + std::to_string(minPts) + "_" + std::to_string(sample) + ".csv";
         pFile = std::fopen(p_fname.c_str(), "w");
         fprintf(pFile, "x,y,label\n");
         

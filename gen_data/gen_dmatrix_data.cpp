@@ -55,14 +55,14 @@ int main(){
 
     // file generating (mean of all iterations)
     FILE *pFile;
-    std::string fname = "../csv/dmatrix.csv";
+    std::string fname = "csv/dmatrix.csv";
     pFile = std::fopen(fname.c_str(), "w");
-    fprintf(pFile, "eps,n_cluster,largest_cluster, n_noise\n");
+    fprintf(pFile, "eps,n_cluster,largest_cluster,n_noise\n");
     for (double eps = eps_start; eps < eps_end; eps += delta){
         double n_cluster = 0.0, largest_cluster = 0.0, n_noise = 0.0;
         for(int sample = 0; sample < n_samples; ++sample){
             DBSCAN clustering(eps, minPts);
-            clustering.fit(distance_matrix, n, "DSU");
+            clustering.fit(distance_matrix, n, "BFS");
             n_cluster += clustering.get_n_cluster();
             largest_cluster += clustering.get_largest_cluster();
             n_noise += clustering.get_n_noise();
