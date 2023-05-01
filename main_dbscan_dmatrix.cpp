@@ -48,8 +48,8 @@ int main(){
     cout << "dmatrix generated! " << endl;
 
     double eps = 3;
-    int m_minPts = 10;
-    DBSCAN clustering(eps, m_minPts);
+    int minPts = 4;
+    DBSCAN clustering(eps, minPts);
     clustering.fit(distance_matrix, n, "DSU");
 
     cout << "Number of clusters: " << clustering.get_n_cluster() << endl;

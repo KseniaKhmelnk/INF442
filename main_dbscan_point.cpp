@@ -37,8 +37,8 @@ int main(){
     }
 
     double eps = 3;
-    int m_minPts = 2;
-    DBSCAN clustering(eps, m_minPts);
+    int minPts = 4;
+    DBSCAN clustering(eps, minPts);
     clustering.fit(distance_matrix, total_pts, "BFS");
 
     cout << "Number of clusters: " << clustering.get_n_cluster() << endl;
