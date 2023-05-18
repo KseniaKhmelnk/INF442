@@ -3,7 +3,7 @@
 ## Description
 
 Graphs can be partitioned in a multitude of ways. In this project we explore the structure of directed graphs by implementing two clustering algorithm based in some principles:
-- DBSCAN (density) 🌐
+- DBSCAN (density) 🧩
 - Kosaraju (strong connectivity) 🔀
 
 ## Usage
