@@ -2,7 +2,7 @@
 
 ## Description
 
-Graphs can be partitioned in a multitude of ways. In this project we explore the structure of directed graphs by implementing two clustering algorithm based in some principles:
+Graphs can be partitioned in a multitude of ways. In this project we explore the structure of directed graphs by implementing two clustering algorithms based in some principles:
 - DBSCAN (density) 🧩
 - Kosaraju (strong connectivity) 🔀
 
